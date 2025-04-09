@@ -4,6 +4,8 @@ import '../../../../core/constants/strings.dart';
 import '../../../../core/theme/Colors.dart';
 import '../../../../core/widgets/DefaultButton.dart';
 import '../../../../core/widgets/MyBackButton.dart';
+import '../../../../core/widgets/Rating.dart';
+import '../../../../core/widgets/TextWithIcon.dart';
 import '../../data/models/Topping.dart';
 import '../../data/repositories/DummyData.dart';
 
@@ -17,14 +19,6 @@ class AddItemToCartModalSheet extends StatefulWidget {
 
 class _AddItemToCartModalSheetState extends State<AddItemToCartModalSheet> {
   int itemCount = 0;
-
-  Widget _textWithIcon(IconData icon, String text) => Row(
-    children: [
-      Icon(icon, color: mainColor),
-      SizedBox(width: 5),
-      Text(text, style: TextStyle(color: greyColor)),
-    ],
-  );
 
   Widget _toppings(Topping topping) => Padding(
     padding: const EdgeInsets.symmetric(vertical: 12),
@@ -156,28 +150,15 @@ class _AddItemToCartModalSheetState extends State<AddItemToCartModalSheet> {
                         children: [
                           Row(
                             children: [
-                              _textWithIcon(
-                                Icons.local_shipping_outlined,
-                                "Free delivery",
+                              TextWithIcon(
+                                icon: Icons.local_shipping_outlined,
+                                text: "Free delivery",
                               ),
                               SizedBox(width: 24),
-                              _textWithIcon(Icons.timer, "45 mins"),
+                              TextWithIcon(icon: Icons.timer, text: "45 mins"),
                             ],
                           ),
-                          Row(
-                            children: [
-                              Icon(Icons.star, size: 24, color: Colors.amber),
-                              SizedBox(width: 4),
-                              Text(
-                                "4.5",
-                                style: TextStyle(
-                                  color: blackColor,
-                                  fontWeight: FontWeight.bold,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ],
-                          ),
+                          Rating(rate: 4.2),
                         ],
                       ),
                       SizedBox(height: 12),
@@ -291,6 +272,8 @@ class _AddItemToCartModalSheetState extends State<AddItemToCartModalSheet> {
     );
   }
 }
+
+
 
 class _CartButton extends StatelessWidget {
   final VoidCallback onTap;

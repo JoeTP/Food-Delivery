@@ -56,18 +56,18 @@ class OnboardScreen extends StatelessWidget {
                       children: [
                         DefaultButton(
                           onPressed:
-                              () =>
-                                  Navigator.pushNamed(context, AppRoutes.register),
+                              () => Navigator.pushNamed(
+                                context,
+                                AppRoutes.register,
+                              ),
                           buttonText: "Sign Up",
                           style: DefaultButtonStyle.OUTLINE_WHITE,
                         ),
                         SizedBox(width: 18),
                         DefaultButton(
                           onPressed:
-                              () => Navigator.pushNamed(
-                                context,
-                                AppRoutes.login,
-                              ),
+                              () =>
+                                  Navigator.pushNamed(context, AppRoutes.login),
                           buttonText: "Log in",
                           style: DefaultButtonStyle.BLACK,
                         ),
