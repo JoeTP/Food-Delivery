@@ -1,3 +1,4 @@
+import 'package:daythree/core/theme/Colors.dart';
 import 'package:daythree/features/cart/presentation/screens/CartScreen.dart';
 import 'package:daythree/features/home/presentation/screens/HomeScreen.dart';
 import 'package:daythree/features/notification/presentation/screens/NotificationScreen.dart';
@@ -31,20 +32,23 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          _screens[_selectedIndex],
-          Positioned(
-            bottom: 0,
-            right: 0,
-            left: 0,
-            child: BottomNav(
-              selectedIndex: _selectedIndex,
-              onTap: _onItemTapped,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: bgColor,
+        body: Stack(
+          children: [
+            _screens[_selectedIndex],
+            Positioned(
+              bottom: 0,
+              right: 0,
+              left: 0,
+              child: BottomNav(
+                selectedIndex: _selectedIndex,
+                onTap: _onItemTapped,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
