@@ -1,3 +1,4 @@
+import 'package:daythree/core/theme/Colors.dart';
 import 'package:flutter/material.dart';
 
 class MyTextFields extends StatelessWidget {
@@ -23,7 +24,7 @@ class MyTextFields extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: TextStyle(fontWeight: FontWeight.w500),),
+          Text(title, style: TextStyle(fontWeight: FontWeight.w500)),
           SizedBox(height: 6),
           TextFormField(
             obscureText: isPassword,
@@ -33,8 +34,25 @@ class MyTextFields extends StatelessWidget {
                 child: Icon(suffixIcon),
               ),
               hintText: hint,
+              hintStyle: TextStyle(color: greyColor.withValues(alpha: 0.6)),
+
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: mainColor),
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+              ),
+
+              filled: true,
+              fillColor: lightGrey,
+
+              suffixIconColor: greyColor.withValues(alpha: 0.5),
+
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+              ),
+
               border: OutlineInputBorder(
-                borderSide: BorderSide(),
+                borderSide: BorderSide(color: mainColor),
                 borderRadius: BorderRadius.all(Radius.circular(15)),
               ),
             ),

@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/values.dart';
 import '../../../../core/widgets/MyBackButton.dart';
 
-class RegisterTopImage extends StatelessWidget {
+class AuthTopImage extends StatelessWidget {
   final String title;
   final String desc;
   final String image;
 
-  RegisterTopImage({
+  AuthTopImage({
     required this.title,
     required this.desc,
     required this.image,
@@ -24,7 +24,7 @@ class RegisterTopImage extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.black,
         image: DecorationImage(
-          image: AssetImage("assets/images/$image.png"),
+          image: AssetImage(image),
           fit: BoxFit.cover,
         ),
       ),

@@ -37,8 +37,6 @@ dependencies:
   flutter_svg: ^2.0.17
   flutter_screenutil: ^5.9.3
   easy_localization: ^3.0.7+1
-  dio: ^5.8.0+1
-  pretty_dio_logger: ^1.4.0
 
 dev_dependencies:
   flutter_test:

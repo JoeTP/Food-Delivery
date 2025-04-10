@@ -1,6 +1,7 @@
 import 'package:daythree/routes/AppRoutes.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/assets.dart';
 import '../../../../core/constants/strings.dart';
 import '../../../../core/styles/ButtonStyles.dart';
 import '../../../../core/theme/Colors.dart';
@@ -21,7 +22,7 @@ class OnboardScreen extends StatelessWidget {
               Positioned(
                 right: 0,
                 top: 0,
-                child: Image.asset("assets/images/onboardImage.png"),
+                child: Image.asset(Assets.onboardimage),
               ),
               Positioned(
                 left: 0,
@@ -32,7 +33,7 @@ class OnboardScreen extends StatelessWidget {
                   child: Image.asset(
                     width: 380,
                     fit: BoxFit.cover,
-                    "assets/images/splashDecoration.png",
+                    Assets.splashdecoration,
                   ),
                 ),
               ),

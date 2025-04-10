@@ -1,3 +1,4 @@
+import 'package:daythree/core/assets.dart';
 import 'package:daythree/routes/AppRoutes.dart';
 import 'package:flutter/material.dart';
 
@@ -20,15 +21,15 @@ class SplashScreen extends StatelessWidget {
               child: Transform.flip(
                 flipY: true,
                 flipX: true,
-                child: Image.asset("assets/images/splashDecoration.png"),
+                child: Image.asset(Assets.splashdecoration),
               ),
             ),
             Positioned(
               right: 0,
               bottom: 0,
-              child: Image.asset("assets/images/splashDecoration.png"),
+              child: Image.asset(Assets.splashdecoration),
             ),
-            Center(child: Image.asset("assets/images/splashLogo.png")),
+            Center(child: Image.asset(Assets.splashlogo)),
           ],
         ),
       ),

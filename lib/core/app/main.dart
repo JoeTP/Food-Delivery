@@ -1,10 +1,18 @@
-import 'package:daythree/features/home/presentation/widgets/AddItemToCartModalSheet.dart';
-import 'package:daythree/features/auth/presentation/screens/Onboard.dart';
-import 'package:daythree/features/auth/presentation/screens/RegisterScreen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'app.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: [Locale('en'), Locale('ar')],
+      path: 'assets/translations',
+      fallbackLocale: Locale('en'),
+      child: MyApp(),
+    ),
+  );
 }

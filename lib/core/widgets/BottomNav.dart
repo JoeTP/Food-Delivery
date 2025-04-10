@@ -46,7 +46,7 @@ class BottomNav extends StatelessWidget {
               : null,
         ),
         child: SvgPicture.asset(
-          "assets/images/${icon}Icon.svg",
+          "assets/image/${icon}Icon.svg",
           colorFilter: ColorFilter.mode(
             isSelected ? mainColor : greyColor,
             BlendMode.srcIn,

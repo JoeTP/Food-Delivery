@@ -1,16 +1,22 @@
+import 'package:daythree/core/widgets/AddRemButton.dart';
+import 'package:daythree/core/widgets/MyNetworkImage.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/assets.dart';
 import '../../../../core/constants/strings.dart';
 import '../../../../core/theme/Colors.dart';
 import '../../../../core/widgets/DefaultButton.dart';
 import '../../../../core/widgets/MyBackButton.dart';
 import '../../../../core/widgets/Rating.dart';
 import '../../../../core/widgets/TextWithIcon.dart';
+import '../../data/models/Meal.dart';
 import '../../data/models/Topping.dart';
 import '../../data/repositories/DummyData.dart';
 
 class AddItemToCartModalSheet extends StatefulWidget {
-  const AddItemToCartModalSheet({super.key});
+  final Meal meal;
+
+  const AddItemToCartModalSheet({super.key, required this.meal});
 
   @override
   State<AddItemToCartModalSheet> createState() =>
@@ -27,7 +33,7 @@ class _AddItemToCartModalSheetState extends State<AddItemToCartModalSheet> {
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(50)),
           child: Image.asset(
-            "assets/images/${topping.image}.png",
+            "assets/image/${topping.image}.png",
             width: 40,
             height: 40,
             fit: BoxFit.cover,
@@ -66,16 +72,17 @@ class _AddItemToCartModalSheetState extends State<AddItemToCartModalSheet> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  height: 250,
+                  height: 260,
                   child: Stack(
                     children: [
-                      Positioned.fill(
+                      Positioned(
+                        top: 0,
+                        left: 70,
+                        right: 70,
                         child: Align(
                           alignment: Alignment.center,
-                          child: Image.asset(
-                            "assets/images/pizza.png",
-                            fit: BoxFit.contain,
-                          ),
+                          child: ClipOval(
+                              child: MyNetworkImage(widget.meal.strMealThumb ?? "")),
                         ),
                       ),
                       Positioned(
@@ -125,7 +132,7 @@ class _AddItemToCartModalSheetState extends State<AddItemToCartModalSheet> {
                         children: [
                           Expanded(
                             child: Text(
-                              "Spaghetti with shrimp and basil",
+                              widget.meal.strMeal ?? "",
                               style: TextStyle(
                                 color: blackColor,
                                 fontWeight: FontWeight.w800,
@@ -215,7 +222,7 @@ class _AddItemToCartModalSheetState extends State<AddItemToCartModalSheet> {
                       Expanded(
                         child: Row(
                           children: [
-                            _CartButton(
+                            AddRemButton(
                               onTap:
                                   () => setState(() {
                                     itemCount--;
@@ -235,7 +242,7 @@ class _AddItemToCartModalSheetState extends State<AddItemToCartModalSheet> {
                                 ),
                               ),
                             ),
-                            _CartButton(
+                            AddRemButton(
                               onTap:
                                   () => setState(() {
                                     itemCount++;
@@ -268,37 +275,6 @@ class _AddItemToCartModalSheetState extends State<AddItemToCartModalSheet> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-
-
-class _CartButton extends StatelessWidget {
-  final VoidCallback onTap;
-  final IconData icon;
-
-  _CartButton({required this.onTap, required this.icon, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(50)),
-      child: Material(
-        color: greyColor,
-        child: InkWell(
-          onTap: onTap,
-          child: Container(
-            width: 30,
-            height: 30,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon),
-          ),
-        ),
       ),
     );
   }

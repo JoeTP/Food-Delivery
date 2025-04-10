@@ -27,7 +27,7 @@ class ImageButton extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Image.asset("assets/image/$image.png"),
+              Image.asset("assets/images/$image.png"),
               Spacer(),
               Text(
                 buttonText,

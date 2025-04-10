@@ -26,7 +26,7 @@ class CategoryCard extends StatelessWidget {
       ),
       padding: isSelected ? EdgeInsets.only(left: 6,right: 6,top: 10,bottom: 15) : EdgeInsets.zero,
       child: Column(
-        mainAxisAlignment: isSelected ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             width: 60,

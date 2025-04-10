@@ -1,30 +1,38 @@
 import 'package:daythree/core/theme/Colors.dart';
 import 'package:daythree/core/widgets/CText.dart';
+import 'package:daythree/core/widgets/MyNetworkImage.dart';
 import 'package:daythree/core/widgets/Rating.dart';
 import 'package:daythree/core/widgets/TextWithIcon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../data/models/Meal.dart';
 
 class SpecialOfferCard extends StatelessWidget {
-  const SpecialOfferCard({super.key});
+  final Meal meal;
+
+  const SpecialOfferCard({super.key, required this.meal});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 280,
+      width: 300.w,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: greenColor,
       ),
       child: Row(
         children: [
-          Image.asset(
-            "assets/images/burger.png",
-            fit: BoxFit.cover,
-            width: 125,
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(15),
+              topLeft: Radius.circular(15),
+            ),
+            child: MyNetworkImage(meal.strMealThumb ?? ""),
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 15.0, 15.0, 15.0),
+              padding: const EdgeInsets.all(15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,9 +45,10 @@ class SpecialOfferCard extends StatelessWidget {
                     textColor: Colors.white54,
                   ),
                   CText(
-                    "Burger King",
+                    meal.strMeal ?? "",
                     weight: FontWeight.w600,
                     size: 16,
+                    maxLine: 1,
                     color: Colors.white,
                   ),
                   TextWithIcon(

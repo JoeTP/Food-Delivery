@@ -1,12 +1,14 @@
+import 'package:daythree/core/assets.dart';
 import 'package:daythree/routes/AppRoutes.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/values.dart';
 import '../../../../core/theme/Colors.dart';
+import '../../../../core/widgets/CText.dart';
 import '../../../../core/widgets/DefaultButton.dart';
 import '../../../../core/widgets/ImageButton.dart';
 import '../../../../core/widgets/MyTextFields.dart';
-import '../widgets/RegisterTopImage.dart';
+import '../widgets/AuthTopImage.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -28,10 +30,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               left: 0,
               right: 0,
               top: 0,
-              child: RegisterTopImage(
+              child: AuthTopImage(
                 title: "Sign Up",
                 desc: "Please sign up to get started",
-                image: "registerImage",
+                image: Assets.registerimage,
               ),
             ),
             Positioned(
@@ -58,14 +60,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         title: "Password",
                         hint: "Password",
                         isPassword: !showPass,
-                        suffixIcon:
-                            showPass ? Icons.visibility_off : Icons.visibility,
+                        suffixIcon: showPass ? Icons.visibility_off : Icons.visibility,
                         onSuffixPressed:
                             () => setState(() {
                               showPass = !showPass;
                             }),
                       ),
-                      Text("Forgot Password"),
+                      CText("Forgot Password", color: mainColor),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 64 - 25,
@@ -76,16 +77,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             DefaultButton(
                               onPressed:
                                   () => Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                AppRoutes.home,
+                                    context,
+                                    AppRoutes.home,
                                     (route) => false,
-                              ),
+                                  ),
                               buttonText: "Sign Up",
                             ),
                           ],
                         ),
                       ),
-                      Text("Or login with"),
+                      CText("Or login with", color: greyColor),
                       SizedBox(height: 20),
                       Row(
                         children: [

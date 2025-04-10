@@ -32,12 +32,16 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom != 0;
+
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: bgColor,
         body: Stack(
           children: [
             _screens[_selectedIndex],
+            if (!isKeyboardVisible)
             Positioned(
               bottom: 0,
               right: 0,

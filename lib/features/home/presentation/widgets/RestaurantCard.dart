@@ -4,6 +4,7 @@ import 'package:daythree/core/widgets/Rating.dart';
 import 'package:daythree/core/widgets/TextWithIcon.dart';
 import 'package:flutter/material.dart';
 
+
 class RestaurantCard extends StatelessWidget {
   const RestaurantCard({super.key});
 
@@ -27,7 +28,7 @@ class RestaurantCard extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
                 child: Image.asset(
-                  "assets/images/restaurant.png",
+                  "assets/image/restaurant.png",
                   fit: BoxFit.cover,
                 ),
               ),
