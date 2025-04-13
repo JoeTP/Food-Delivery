@@ -4,34 +4,43 @@ import 'package:flutter/material.dart';
 
 import '../theme/Colors.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.pushReplacementNamed(context, AppRoutes.home);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: mainColor,
-      body: GestureDetector(
-        onTap: () => Navigator.pushReplacementNamed(context, AppRoutes.onboard),
-        child: Stack(
-          children: [
-            Positioned(
-              left: 0,
-              top: 0,
-              child: Transform.flip(
-                flipY: true,
-                flipX: true,
-                child: Image.asset(Assets.splashdecoration),
-              ),
-            ),
-            Positioned(
-              right: 0,
-              bottom: 0,
+      body: Stack(
+        children: [
+          Positioned(
+            left: 0,
+            top: 0,
+            child: Transform.flip(
+              flipY: true,
+              flipX: true,
               child: Image.asset(Assets.splashdecoration),
             ),
-            Center(child: Image.asset(Assets.splashlogo)),
-          ],
-        ),
+          ),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: Image.asset(Assets.splashdecoration),
+          ),
+          Center(child: Image.asset(Assets.splashlogo)),
+        ],
       ),
     );
   }
