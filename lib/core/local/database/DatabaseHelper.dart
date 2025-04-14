@@ -1,24 +1,33 @@
 import 'dart:async';
+import 'package:daythree/data/model/CartItemModel.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
+import '../../../features/auth/data/models/User.dart';
+
 class DatabaseHelper {
 
-  static final DatabaseHelper _instance = DatabaseHelper._internal();
+  static final DatabaseHelper _instance = DatabaseHelper._();
   factory DatabaseHelper() => _instance;
-  DatabaseHelper._internal();
+  DatabaseHelper._();
 
   static Database? _database;
 
   final String _databaseName = 'my_db.db';
   final int _version = 1;
 
-  final String tableNotes = 'notes';
+  //?Cart
+  final String tableCart = 'cart';
+  final String mealIdColumn = 'id';
+  final String mealNameColumn = 'name';
+  final String mealImageColumn = 'image';
+  final String mealCountColumn = "count";
 
-  final String columnId = 'id';
-  final String columnTitle = 'title';
-  final String columnDescription = 'description';
-  final String columnCreatedAt = 'created_at';
+  //?Users
+  final String tableUsers = 'users';
+  final String nameColumn = 'name';
+  final String emailColumn = 'email';
+  final String passwordColumn = 'password';
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -39,58 +48,55 @@ class DatabaseHelper {
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE $tableNotes (
-        $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
-        $columnTitle TEXT NOT NULL,
-        $columnDescription TEXT,
-        $columnCreatedAt TEXT NOT NULL
-      )
+      CREATE TABLE $tableUsers (
+        $emailColumn TEXT PRIMARY KEY NOT NULL,
+        $nameColumn TEXT NOT NULL,
+        $passwordColumn TEXT NOT NULL
+        )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE $tableCart (
+        $mealIdColumn TEXT PRIMARY KEY NOT NULL,
+        $mealNameColumn TEXT NOT NULL,
+        $mealCountColumn INTEGER NOT NULL,
+        $mealImageColumn TEXT NOT NULL
+        )
     ''');
   }
 
-
-  Future<int> insertNote(Map<String, dynamic> note) async {
+  Future<int> insertItemToCart(CartItemModel item) async{
     final db = await database;
-    note[columnCreatedAt] = DateTime.now().toIso8601String();
-    return await db.insert(tableNotes, note);
+    return await db.insert(tableCart, item.toJson(),conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
 
-  Future<Map<String, dynamic>?> getNote(int id) async {
+  Future<List<CartItemModel>> getCartItems() async {
+    final db = await database;
+    final List<Map<String, dynamic>> result = await db.query(tableCart);
+    return result.map((e) => CartItemModel.fromJson(e)).toList();
+  }
+
+  Future<int> deleteItemFromCart(String id) async{
+    final db = await database;
+    return await db.delete(tableCart, where: '$mealIdColumn = ?', whereArgs: [id]);
+  }
+
+
+  Future<int> insertUser(User user) async {
+    final db = await database;
+    return await db.insert(tableUsers, user.toJson());
+  }
+
+
+  Future<User?> getUser(String email, String password) async {
     final db = await database;
     final List<Map<String, dynamic>> result = await db.query(
-      tableNotes,
-      where: '$columnId = ?',
-      whereArgs: [id],
+      tableUsers,
+      where: '$emailColumn = ? AND $passwordColumn = ?',
+      whereArgs: [email, password],
     );
-    return result.isNotEmpty ? result.first : null;
-  }
-
-
-  Future<List<Map<String, dynamic>>> getAllNotes() async {
-    final db = await database;
-    return await db.query(tableNotes, orderBy: columnCreatedAt);
-  }
-
-
-  Future<int> updateNote(Map<String, dynamic> note) async {
-    final db = await database;
-    return await db.update(
-      tableNotes,
-      note,
-      where: '$columnId = ?',
-      whereArgs: [note[columnId]],
-    );
-  }
-
-
-  Future<int> deleteNote(int id) async {
-    final db = await database;
-    return await db.delete(
-      tableNotes,
-      where: '$columnId = ?',
-      whereArgs: [id],
-    );
+    return result.isNotEmpty ? User.fromJson(result.first) : null;
   }
 
 

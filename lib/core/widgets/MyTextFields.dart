@@ -2,6 +2,7 @@ import 'package:daythree/core/theme/Colors.dart';
 import 'package:flutter/material.dart';
 
 class MyTextFields extends StatelessWidget {
+  final TextEditingController controller;
   final String title;
   final String hint;
   final bool isPassword;
@@ -10,6 +11,7 @@ class MyTextFields extends StatelessWidget {
 
   MyTextFields({
     required this.hint,
+    required this.controller,
     required this.title,
     this.isPassword = false,
     this.suffixIcon,
@@ -27,6 +29,13 @@ class MyTextFields extends StatelessWidget {
           Text(title, style: TextStyle(fontWeight: FontWeight.w500)),
           SizedBox(height: 6),
           TextFormField(
+            controller: controller,
+            validator: (s){
+              if(s!.isEmpty){
+                return "Field can't be empty";
+              }
+              return null;
+            },
             obscureText: isPassword,
             decoration: InputDecoration(
               suffixIcon: GestureDetector(

@@ -184,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void handleLogout() {
-    prefs.setBool(AppConst.ISLOGGED, false);
+    prefs.setBool(Constants.ISLOGGED, false);
     Navigator.pushNamedAndRemoveUntil(context, AppRoutes.onboard, (route) => false);
   }
 }

@@ -1,8 +1,9 @@
+import 'package:daythree/core/local/database/DatabaseHelper.dart';
 import 'package:daythree/core/widgets/AddRemButton.dart';
 import 'package:daythree/core/widgets/MyNetworkImage.dart';
+import 'package:daythree/data/model/CartItemModel.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/assets.dart';
 import '../../../../core/constants/strings.dart';
 import '../../../../core/theme/Colors.dart';
 import '../../../../core/widgets/DefaultButton.dart';
@@ -25,6 +26,14 @@ class AddItemToCartModalSheet extends StatefulWidget {
 
 class _AddItemToCartModalSheetState extends State<AddItemToCartModalSheet> {
   int itemCount = 0;
+
+  late DatabaseHelper db;
+
+  @override
+  void initState() {
+    super.initState();
+    db = DatabaseHelper();
+  }
 
   Widget _toppings(Topping topping) => Padding(
     padding: const EdgeInsets.symmetric(vertical: 12),
@@ -82,7 +91,10 @@ class _AddItemToCartModalSheetState extends State<AddItemToCartModalSheet> {
                         child: Align(
                           alignment: Alignment.center,
                           child: ClipOval(
-                              child: MyNetworkImage(widget.meal.strMealThumb ?? "")),
+                            child: MyNetworkImage(
+                              widget.meal.strMealThumb ?? "",
+                            ),
+                          ),
                         ),
                       ),
                       Positioned(
@@ -252,21 +264,10 @@ class _AddItemToCartModalSheetState extends State<AddItemToCartModalSheet> {
                           ],
                         ),
                       ),
-                      Container(
-                        width: 220,
-                        child: DefaultButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                behavior: SnackBarBehavior.floating,
-                                content: Text("Added $itemCount items"),
-                                duration: Duration(seconds: 2),
-                              ),
-                            );
-                          },
-                          buttonText: "Add $itemCount to basket \$22.34",
-                        ),
+                      DefaultButton(
+                        flex: 2,
+                        onPressed: handleAddButton,
+                        buttonText: "Add $itemCount to basket \$22.34",
                       ),
                     ],
                   ),
@@ -277,5 +278,36 @@ class _AddItemToCartModalSheetState extends State<AddItemToCartModalSheet> {
         ],
       ),
     );
+  }
+
+  void handleAddButton() {
+    if (itemCount > 0) {
+      CartItemModel cartItem = CartItemModel(
+        id: widget.meal.idMeal,
+        name: widget.meal.strMeal,
+        image: widget.meal.strMealThumb,
+        count: itemCount,
+      );
+      db.insertItemToCart(cartItem).then((value) {
+        if (value > 0) {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text("Added $itemCount items"),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }else{
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text("Failed to add"),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      });
+    }
   }
 }

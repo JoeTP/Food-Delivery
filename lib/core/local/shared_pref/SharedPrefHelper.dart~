@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefHelper {
@@ -9,14 +7,19 @@ class SharedPrefHelper {
   SharedPrefHelper._(this._sharedPreferences);
 
   factory SharedPrefHelper() {
-    print('INSTANCE CREATED $_instance');
+    if (_instance == null) {
+      throw Exception(
+          'SharedPrefHelper not initialized. Call SharedPrefHelper.initialize() first');
+    }
     return _instance!;
   }
 
-  static Future<void> initialize() async {
-    final prefs = await SharedPreferences.getInstance();
-    print('"INITIALIZED"');
-    _instance = SharedPrefHelper._(prefs);
+  static Future<SharedPrefHelper> initialize() async {
+    if (_instance == null) {
+      final prefs = await SharedPreferences.getInstance();
+      _instance = SharedPrefHelper._(prefs);
+    }
+    return _instance!;
   }
 
   SharedPreferences get instance => _sharedPreferences;

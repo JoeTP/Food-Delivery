@@ -22,6 +22,8 @@ class ImageButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: onPress,
           style: ElevatedButton.styleFrom(
+            elevation: 10,
+            shadowColor: Colors.grey.withValues(alpha: 0.15),
             backgroundColor: Colors.white,
             padding: EdgeInsets.only(left: 12, right: 24),
           ),
